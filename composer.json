@@ -1,0 +1,17 @@
+{
+    "name": "stevie/mark-demo",
+    "description": "",
+    "authors": [
+        {
+            "name": "Stevie",
+            "email": "yzm629@sina.cn"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "ext-json": "*",
+        "mark-php/mark": "^1.1",
+        "endroid/qr-code": "^4.0",
+        "symfony/cache": "^5.2"
+    }
+}

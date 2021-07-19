@@ -1,0 +1,37 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Transform: 'Aliyun::Serverless-2018-04-03'
+Resources:
+  customruntime:
+    Type: 'Aliyun::Serverless::Service'
+    Properties:
+      Description: helloworld
+    mark:
+      Type: 'Aliyun::Serverless::Function'
+      Properties:
+        Handler: index.handler
+        Runtime: custom
+        CodeUri: ./
+        MemorySize: 128
+        Timeout: 1
+        InstanceConcurrency: 100
+      Events:
+        httpTrigger:
+          Type: HTTP
+          Properties:
+            AuthType: ANONYMOUS
+            Methods:
+              - HEAD
+              - POST
+              - PUT
+              - GET
+              - DELETE
+  Domain:
+    Type: Aliyun::Serverless::CustomDomain
+    Properties:
+      DomainName: Auto
+      Protocol: HTTP
+      RouteConfig:
+        Routes:
+          "/*":
+            ServiceName: customruntime
+            FunctionName: mark
