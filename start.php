@@ -28,40 +28,35 @@ $api->get('/', function () {
     return 'Hello world';
 });
 
-$api->get('/qrcode', function (Request $requst) use ($cache){
-    $get = new \stdClass();
-    $get->data = $requst->get('data') ?? 'xxxxx';
-    $get->size = (int)($requst->get('size') ?? 300);
-    $get->ext = $requst->get('ext') ?? 'svg';
+$files = new RecursiveDirectoryIterator('app/Controllers');
+foreach ($files as $file){
+    if(
+        $file->isDir()
+        || !$file->getExtension()
+        || stristr( $file->getFilename(), 'base')
+    ) continue;
 
-    $cache_key = md5('qrcode'.implode(',', (array)$get));
+    $class_name = str_replace( '.'.$file->getExtension(), '', $file->getFilename());
+    $class_path = '\App\Controllers\\'.$class_name;
+    $route = new $class_path();
+    $methods = get_class_methods($route);
 
-    // debug delete cache
-    // $cache->delete($cache_key);
-    
-    $result = $cache->get($cache_key, function (ItemInterface $item) use ($get) {
-        $item->expiresAfter(60 * 60);
+    $group_path = lcfirst(str_replace('Controller', '', $class_name));
 
-        $result = Builder::create()
-            ->writer($get->ext == 'png' ? new PngWriter() : new SvgWriter())
-            ->writerOptions([])
-            ->data($get->data)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size($get->size)
-            ->margin(10)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->build();
-
-        return [
-            'mime_type' => $result->getMimeType(),
-            'string' =>  $result->getString()
-        ];
+    $api->group('/'.$group_path, function(App $api) use ($methods, $route){
+        foreach ($methods as $method){
+            if($method == 'index') {
+                $api->get( '', fn($requst) => $route->$method($requst));
+                $api->get( '/', fn($requst) => $route->$method($requst));
+                continue;
+            }
+            foreach (['get', 'post', 'delete', 'put'] as $v){
+                if(strpos($method, $v) !== 0) continue;
+                $api->$v('/'.lcfirst(str_replace($v, '', $method)), fn($requst) => $route->$method($requst));
+                break;
+            }
+        }
     });
-
-    return new Response(200, [
-        'Content-Type' => $result['mime_type']
-    ], $result['string']);
-});
+}
 
 $api->start();
