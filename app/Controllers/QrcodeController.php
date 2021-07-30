@@ -16,16 +16,19 @@ class QrcodeController extends BaseController
     public function index(Request $requst)
     {
         $get = new \stdClass();
-        $get->data = $requst->get('data') ?? 'xxxxx';
+        $get->data = $requst->get('data') ?? $requst->get('txt') ?? 'xxxxx';
         $get->size = (int)($requst->get('size') ?? 300);
         $get->ext = $requst->get('ext') ?? 'svg';
 
         $cache_key = md5('qrcode'.implode(',', (array)$get));
 
-        // debug delete cache
-        // $cache->delete($cache_key);
+        $cache = cache();
 
-        $result = cache()->get($cache_key, function (ItemInterface $item) use ($get) {
+        if($requst->get('debug')){
+            $cache->delete($cache_key);
+        }
+
+        $result = $cache->get($cache_key, function (ItemInterface $item) use ($get) {
             $item->expiresAfter(60 * 60);
 
             $result = Builder::create()
