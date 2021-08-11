@@ -1,21 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
-use Mark\App;
-
-use Workerman\Protocols\Http\{Request, Response};
-
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\SvgWriter;
-use Endroid\QrCode\Writer\PngWriter;
-
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Cache\ItemInterface;
-
-$cache = new FilesystemAdapter('', 0, '/tmp/mark_cache');
+use App\App;
 
 App::$pidFile = '/tmp/mark-run.pid';
 App::$logFile = '/tmp/mark-run.log';
@@ -29,31 +15,58 @@ $api->get('/', function () {
 });
 
 $files = new RecursiveDirectoryIterator('app/Controllers');
-foreach ($files as $file){
-    if(
+
+$responseHandle = function ($res) {
+    if (is_object($res)) {
+        if (method_exists($res, 'toString')) $res = $res->toString();
+        if (method_exists($res, 'toArray')) $res = $res->toArray();
+    }
+    if (
+        is_array($res)
+        || $res instanceof \stdClass
+    ) $res = json_encode($res);
+
+    return $res;
+};
+$indexHandle = function ($route) use ($api, $responseHandle) {
+    $api->get('', fn($requst) => $responseHandle($route->index($requst)));
+    $api->get('/', fn($requst) => $responseHandle($route->index($requst)));
+};
+
+foreach ($files as $file) {
+    if (
         $file->isDir()
         || !$file->getExtension()
-        || stristr( $file->getFilename(), 'base')
+        || stristr($file->getFilename(), 'base')
     ) continue;
 
-    $class_name = str_replace( '.'.$file->getExtension(), '', $file->getFilename());
-    $class_path = '\App\Controllers\\'.$class_name;
+    $class_name = str_replace('.' . $file->getExtension(), '', $file->getFilename());
+    $class_path = '\App\Controllers\\' . $class_name;
     $route = new $class_path();
     $methods = get_class_methods($route);
 
     $group_path = lcfirst(str_replace('Controller', '', $class_name));
 
-    $api->group('/'.$group_path, function(App $api) use ($methods, $route){
-        foreach ($methods as $method){
-            if($method == 'index') {
-                $api->get( '', fn($requst) => $route->$method($requst));
-                $api->get( '/', fn($requst) => $route->$method($requst));
+    $api->group('/' . $group_path, function (App $api) use ($methods, $route, $indexHandle, $responseHandle) {
+        foreach ($methods as $method) {
+            if ($method == 'index') {
+                $indexHandle($route);
                 continue;
             }
-            foreach (['get', 'post', 'delete', 'put'] as $v){
-                if(strpos($method, $v) !== 0) continue;
-                $api->$v('/'.lcfirst(str_replace($v, '', $method)), fn($requst) => $route->$method($requst));
+            $hasMethod = false;
+            foreach (['get', 'post', 'delete', 'put'] as $v) {
+                if (strpos($method, $v) !== 0) continue;
+                $pathName = str_replace($v, '', $method);
+                if ($pathName == 'index') {
+                    $indexHandle($route);
+                } else {
+                    $api->$v('/' . lcfirst($pathName), fn($requst) => $responseHandle($route->$method($requst)));
+                }
+                $hasMethod = true;
                 break;
+            }
+            if (!$hasMethod) {
+                $api->get('/' . lcfirst($method), fn($requst) => $responseHandle($route->$method($requst)));
             }
         }
     });

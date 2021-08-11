@@ -52,8 +52,4 @@ class QrcodeController extends BaseController
             'Content-Type' => $result['mime_type']
         ], $result['string']);
     }
-
-    public function getA(){
-        return 'xxxx';
-    }
 }
