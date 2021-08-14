@@ -10,10 +10,6 @@ $api = new App('http://0.0.0.0:9000');
 
 $api->count = 2; // process count
 
-$api->get('/', function () {
-    return 'Hello world';
-});
-
 $files = new RecursiveDirectoryIterator('app/Controllers');
 
 $responseHandle = function ($res) {
@@ -47,7 +43,7 @@ foreach ($files as $file) {
 
     $group_path = lcfirst(str_replace('Controller', '', $class_name));
 
-    $api->group('/' . $group_path, function (App $api) use ($methods, $route, $indexHandle, $responseHandle) {
+    $groupHandle = function (App $api) use ($methods, $route, $indexHandle, $responseHandle) {
         foreach ($methods as $method) {
             if ($method == 'index') {
                 $indexHandle($route);
@@ -69,7 +65,13 @@ foreach ($files as $file) {
                 $api->get('/' . lcfirst($method), fn($requst) => $responseHandle($route->$method($requst)));
             }
         }
-    });
+    };
+
+    if ($group_path === 'default') {
+        $groupHandle($api);
+    } else {
+        $api->group('/' . $group_path, fn(App $api) => $groupHandle($api));
+    }
 }
 
 $api->start();

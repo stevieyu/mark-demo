@@ -39,7 +39,7 @@ class WechatController extends BaseController
                 'uploadImage',
                 'downloadImage',*/
 //                'translateVoice',
-//                'getNetworkType',
+                'getNetworkType',
 //                'openLocation',
 //                'getLocation',
 //                'hideOptionMenu',
@@ -48,7 +48,7 @@ class WechatController extends BaseController
 //                'showMenuItems',
 //                'hideAllNonBaseMenuItem',
 //                'showAllNonBaseMenuItem',
-//                'closeWindow',
+                'closeWindow',
                 'scanQRCode',
                 'chooseWXPay',
 //                'openProductSpecificView',
