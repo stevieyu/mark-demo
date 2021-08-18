@@ -11,8 +11,8 @@ Resources:
         Handler: index.handler
         Runtime: custom
         CodeUri: ./
-        MemorySize: 128
-        Timeout: 1
+        MemorySize: 256
+        Timeout: 3
         InstanceConcurrency: 100
       Events:
         httpTrigger:

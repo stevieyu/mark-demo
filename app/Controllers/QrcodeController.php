@@ -13,10 +13,10 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class QrcodeController extends BaseController
 {
-    public function index(Request $requst)
+    public function index(Request $requst): Response
     {
         $get = new \stdClass();
-        $get->data = $requst->get('data') ?? $requst->get('txt') ?? 'xxxxx';
+        $get->data = $requst->get('data') ?? $requst->get('txt') ?? $requst->get('text') ?? 'xxxxx';
         $get->size = (int)($requst->get('size') ?? 300);
         $get->ext = $requst->get('ext') ?? 'svg';
 

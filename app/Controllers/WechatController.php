@@ -8,7 +8,7 @@ use Workerman\Connection\TcpConnection;
 
 class WechatController extends BaseController
 {
-    public function signature(Request $request)
+    public function signature(Request $request): string
     {
         $app = Factory::officialAccount([
             'app_id' => 'wxbeace8cd80da4952',

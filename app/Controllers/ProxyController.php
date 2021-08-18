@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class ProxyController extends BaseController
 {
-    public function index(Request $request)
+    public function index(Request $request): string
     {
         $r = $request->get('r', 'http://httpbin.org/anything');
         return (new Client())->get($r)->getBody()->getContents();

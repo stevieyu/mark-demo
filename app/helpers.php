@@ -5,13 +5,12 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 if (!function_exists('cache')) {
     /**
-     * @param dynamic  key|key,default|data,expiration|null
      * @return mixed|FilesystemAdapter
      * @throws \Psr\Cache\InvalidArgumentException
      */
     function cache() {
         $arguments = func_get_args();
-        $cache = new FilesystemAdapter('', 0, '/tmp/mark_cache');
+        $cache = new FilesystemAdapter('', 0, '/tmp/storage/cache');
 
         if (empty($arguments)) {
             return $cache;
