@@ -1,0 +1,40 @@
+edition: 1.0.0
+name: transform_fun
+access: default
+vars:
+  region: cn-shenzhen
+services:
+  fc-customruntime-mark:
+    component: devsapp/fc
+    props:
+      region: ${vars.region}
+      service:
+        name: customruntime
+        description: helloworld
+        internetAccess: true
+      function:
+        name: mark
+        handler: index.handler
+        timeout: 1
+        memorySize: 128
+        runtime: custom
+        instanceConcurrency: 100
+        codeUri: ./
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - HEAD
+              - POST
+              - PUT
+              - GET
+              - DELETE
+      customDomains:
+        - domainName: Auto
+          protocol: HTTP
+          routeConfigs:
+            - serviceName: customruntime
+              functionName: mark
+              path: /*

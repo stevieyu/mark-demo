@@ -11,8 +11,8 @@ class WechatController extends BaseController
     public function signature(Request $request): string
     {
         $app = Factory::officialAccount([
-            'app_id' => 'wxbeace8cd80da4952',
-            'secret' => 'e9c779ef6b0ffecf4ac49c51959190d9',
+            'app_id' => $request->get('appid', 'wxbeace8cd80da4952'),
+            'secret' => $request->get('appid', 'e9c779ef6b0ffecf4ac49c51959190d9'),
         ]);
 
         $url = $request->get('url', $request->header('referer'));
