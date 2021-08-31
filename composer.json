@@ -19,6 +19,9 @@
         "intervention/imagecache": "^2.5",
         "guzzlehttp/guzzle": "^7.3"
     },
+    "scripts": {
+        "deploy": "s deploy -t s.yaml"
+    },
     "autoload": {
         "files": [
             "app/helpers.php"

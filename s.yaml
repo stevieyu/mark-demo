@@ -15,7 +15,7 @@ services:
       function:
         name: mark
         handler: index.handler
-        timeout: 1
+        timeout: 3
         memorySize: 128
         runtime: custom
         instanceConcurrency: 100
@@ -32,7 +32,7 @@ services:
               - GET
               - DELETE
       customDomains:
-        - domainName: Auto
+        - domainName: mark.fc-hn.stevie.top
           protocol: HTTP
           routeConfigs:
             - serviceName: customruntime

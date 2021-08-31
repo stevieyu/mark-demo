@@ -10,9 +10,9 @@ class ImageController extends BaseController
     public function index(Request $request): Response
     {
         $r = $request->get('r', 'https://picsum.photos/200/300');
-        $ext = $request->get('ext', 'jpg');
+        $ext = $request->get('ext');
 
-        if(in_array($ext, explode('jpg,png,webp,avif', ','))) $ext = 'png';
+        if(!in_array($ext, explode(',', 'jpg,png,webp,avif'))) $ext = 'webp';
 
         $config = [
 //            'driver' => extension_loaded('imagick') ?'imagick':'gd',
@@ -22,6 +22,7 @@ class ImageController extends BaseController
         ];
 
         $res = (new ImageManager($config))
+//            ->make($r)
             ->cache(fn($image) => $image->make($r), 60, true)
             ->stream($ext, 60);
 

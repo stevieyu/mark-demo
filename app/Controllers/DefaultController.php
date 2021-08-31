@@ -14,7 +14,7 @@ class DefaultController extends BaseController
         $ret = [];
 
         if(extension_loaded('gd')) $ret['gd'] = gd_info();
-        if(extension_loaded('imagick')) $ret['gd'] = \Imagick::getVersion();
+        if(extension_loaded('imagick')) $ret['imagick'] = \Imagick::getVersion();
 
         return $ret;
     }

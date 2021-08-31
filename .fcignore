@@ -1,5 +1,3 @@
-s.yaml
-.s
-.idea
+*.yaml
 *.md
-*ignore
+.*
