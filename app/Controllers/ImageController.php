@@ -14,20 +14,17 @@ class ImageController extends BaseController
         $get->r = $request->get('r', 'https://picsum.photos/200/300?1=1');
         $get->ext = $request->get('ext', $request->get('e'));
 
-        if(!in_array($get->ext, explode(',', 'jpg,png,webp,avif'))) $get->ext = 'webp';
+        if (!in_array($get->ext, explode(',', 'jpg,png,webp,avif'))) $get->ext = 'webp';
 
-        $cache_key = md5(__METHOD__.implode(',', (array)$get));
+        $cache_key = md5(__METHOD__ . implode(',', (array)$get));
         $cache = cache();
-        if($request->get('debug'))$cache->delete($cache_key);
+        if ($request->get('debug')) $cache->delete($cache_key);
 
         $res = $cache->get($cache_key, function (ItemInterface $item) use ($get) {
             $item->expiresAfter(60 * 60 * 24);
 
             $config = [
-                'driver' => extension_loaded('imagick') ?'imagick':'gd',
-                'cache' => [
-                    'path' => '/tmp/storage/cache'
-                ]
+                'driver' => extension_loaded('imagick') ? 'imagick' : 'gd',
             ];
 
             return (new ImageManager($config))
@@ -37,7 +34,7 @@ class ImageController extends BaseController
         });
 
         return new Response(200, [
-            'Content-Type' => 'image/'.$get->ext
+            'Content-Type' => 'image/' . $get->ext
         ], $res);
     }
 }
