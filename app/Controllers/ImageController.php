@@ -4,30 +4,40 @@ namespace App\Controllers;
 
 use Intervention\Image\ImageManager;
 use Workerman\Protocols\Http\{Request, Response};
+use Symfony\Contracts\Cache\ItemInterface;
 
 class ImageController extends BaseController
 {
     public function index(Request $request): Response
     {
-        $r = $request->get('r', 'https://picsum.photos/200/300');
-        $ext = $request->get('ext');
+        $get = new \stdClass();
+        $get->r = $request->get('r', 'https://picsum.photos/200/300?1=1');
+        $get->ext = $request->get('ext', $request->get('e'));
 
-        if(!in_array($ext, explode(',', 'jpg,png,webp,avif'))) $ext = 'webp';
+        if(!in_array($get->ext, explode(',', 'jpg,png,webp,avif'))) $get->ext = 'webp';
 
-        $config = [
-//            'driver' => extension_loaded('imagick') ?'imagick':'gd',
-            'cache' => [
-                'path' => '/tmp/storage/cache'
-            ]
-        ];
+        $cache_key = md5(__METHOD__.implode(',', (array)$get));
+        $cache = cache();
+        if($request->get('debug'))$cache->delete($cache_key);
 
-        $res = (new ImageManager($config))
-//            ->make($r)
-            ->cache(fn($image) => $image->make($r), 60, true)
-            ->stream($ext, 60);
+        $res = $cache->get($cache_key, function (ItemInterface $item) use ($get) {
+            $item->expiresAfter(60 * 60 * 24);
+
+            $config = [
+                'driver' => extension_loaded('imagick') ?'imagick':'gd',
+                'cache' => [
+                    'path' => '/tmp/storage/cache'
+                ]
+            ];
+
+            return (new ImageManager($config))
+                ->make($get->r)
+                ->stream($get->ext, 60)
+                ->getContents();
+        });
 
         return new Response(200, [
-            'Content-Type' => 'image/'.$ext
+            'Content-Type' => 'image/'.$get->ext
         ], $res);
     }
 }

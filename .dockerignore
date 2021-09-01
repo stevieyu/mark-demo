@@ -1,0 +1,6 @@
+.*
+*.md
+*.yaml
+*.log
+Dockerfile
+vendor

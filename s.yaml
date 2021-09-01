@@ -6,6 +6,9 @@ vars:
 services:
   fc-customruntime-mark:
     component: devsapp/fc
+    actions:
+      pre-deploy:
+        - run: s build --use-docker && docker push registry.cn-shenzhen.aliyuncs.com/stevie/fc -a
     props:
       region: ${vars.region}
       service:
@@ -17,9 +20,10 @@ services:
         handler: index.handler
         timeout: 3
         memorySize: 128
-        runtime: custom
+        runtime: custom-container
+        customContainerConfig:
+          image: registry.cn-shenzhen.aliyuncs.com/stevie/fc:mark
         instanceConcurrency: 100
-        codeUri: ./
       triggers:
         - name: httpTrigger
           type: http

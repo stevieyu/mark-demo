@@ -13,20 +13,17 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class QrcodeController extends BaseController
 {
-    public function index(Request $requst): Response
+    public function index(Request $request): Response
     {
         $get = new \stdClass();
-        $get->data = $requst->get('data') ?? $requst->get('txt') ?? $requst->get('text') ?? 'xxxxx';
-        $get->size = (int)($requst->get('size') ?? 300);
-        $get->ext = $requst->get('ext') ?? 'svg';
+        $get->data = $request->get('data') ?? $request->get('txt') ?? $request->get('text') ?? 'xxxxx';
+        $get->size = (int)($request->get('size') ?? 300);
+        $get->ext = $request->get('ext') ?? 'svg';
 
-        $cache_key = md5('qrcode'.implode(',', (array)$get));
-
+        $cache_key = md5(__METHOD__.implode(',', (array)$get));
         $cache = cache();
+        if($request->get('debug'))$cache->delete($cache_key);
 
-        if($requst->get('debug')){
-            $cache->delete($cache_key);
-        }
 
         $result = $cache->get($cache_key, function (ItemInterface $item) use ($get) {
             $item->expiresAfter(60 * 60);
