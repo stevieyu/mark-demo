@@ -3,26 +3,24 @@ name: transform_fun
 access: default
 vars:
   region: cn-shenzhen
+  sName: customruntime
+  fName: mark
 services:
   fc-customruntime-mark:
     component: devsapp/fc
-    actions:
-      pre-deploy:
-        - run: s build --use-docker && docker push registry.cn-shenzhen.aliyuncs.com/stevie/fc -a
     props:
       region: ${vars.region}
       service:
-        name: customruntime
+        name: ${vars.sName}
         description: helloworld
         internetAccess: true
       function:
-        name: mark
+        name: ${vars.fName}
         handler: index.handler
         timeout: 3
         memorySize: 128
-        runtime: custom-container
-        customContainerConfig:
-          image: registry.cn-shenzhen.aliyuncs.com/stevie/fc:mark
+        codeUri: ./
+        runtime: custom
         instanceConcurrency: 100
       triggers:
         - name: httpTrigger
@@ -36,9 +34,9 @@ services:
               - GET
               - DELETE
       customDomains:
-        - domainName: mark.fc-hn.stevie.top
+        - domainName: ${vars.fName}.fc-hn.stevie.top
           protocol: HTTP
           routeConfigs:
-            - serviceName: customruntime
-              functionName: mark
+            - serviceName: ${vars.sName}
+              functionName: ${vars.fName}
               path: /*

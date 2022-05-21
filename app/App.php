@@ -34,4 +34,19 @@ class App extends BaseApp
 
         return parent::onMessage($connection, $request);
     }
+
+    public function start()
+    {
+        $this->dispatcher = \FastRoute\cachedDispatcher(function(\FastRoute\RouteCollector $r) {
+            foreach ($this->routeInfo as $method => $callbacks) {
+                foreach ($callbacks as $info) {
+                    $r->addRoute($method, $info[0], $info[1]);
+                }
+            }
+        }, [
+            'cacheFile' => '/tmp/route.cache', /* required */
+        ]);
+
+        \Workerman\Worker::runAll();
+    }
 }

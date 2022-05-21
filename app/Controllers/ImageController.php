@@ -24,7 +24,7 @@ class ImageController extends BaseController
             $item->expiresAfter(60 * 60 * 24);
 
             $config = [
-                'driver' => extension_loaded('imagick') ? 'imagick' : 'gd',
+                //'driver' => extension_loaded('imagick') ? 'imagick' : 'gd',
             ];
 
             return (new ImageManager($config))

@@ -9,7 +9,7 @@ class ProxyController extends BaseController
 {
     public function index(Request $request): string
     {
-        $r = $request->get('r', 'http://httpbin.org/anything');
+        $r = $request->get('r', 'http://httpbin.org/anything?r=x');
         return (new Client())->get($r)->getBody()->getContents();
     }
 }
