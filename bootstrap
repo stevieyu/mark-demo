@@ -1,5 +1,3 @@
 #!/bin/bash
 
-rm /tmp/route.cache
-
-php start.php start
+php start.php start -d

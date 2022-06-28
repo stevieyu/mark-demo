@@ -20,7 +20,7 @@ $responseHandle = function ($res) {
     if (
         is_array($res)
         || $res instanceof \stdClass
-    ) $res = json_encode($res);
+    ) $res = json_encode($res, JSON_UNESCAPED_UNICODE);
 
     return $res;
 };

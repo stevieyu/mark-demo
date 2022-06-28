@@ -37,6 +37,9 @@ class App extends BaseApp
 
     public function start()
     {
+        $cache_key = '/tmp/route.cache';
+        if(file_exists($cache_key)) unlink($cache_key);
+
         $this->dispatcher = \FastRoute\cachedDispatcher(function(\FastRoute\RouteCollector $r) {
             foreach ($this->routeInfo as $method => $callbacks) {
                 foreach ($callbacks as $info) {
@@ -44,7 +47,7 @@ class App extends BaseApp
                 }
             }
         }, [
-            'cacheFile' => '/tmp/route.cache', /* required */
+            'cacheFile' => $cache_key, /* required */
         ]);
 
         \Workerman\Worker::runAll();

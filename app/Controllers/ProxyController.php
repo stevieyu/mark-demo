@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Workerman\Protocols\Http\{Request, Response};
+use Workerman\Protocols\Http\Request;
 use GuzzleHttp\Client;
 
 class ProxyController extends BaseController
