@@ -4,7 +4,7 @@ s local start -t s.yaml Auto
 
 # or
 
-docker run --rm -v $(pwd):/code -it --entrypoint="" -p 9000:9000 aliyunfc/runtime-custom:1.10.1 bash
+docker run --rm -v $(pwd):/code -it --entrypoint="" -p 9000:9000 aliyunfc/runtime-custom bash
 ```
 
 ## deploy
