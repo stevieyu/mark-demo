@@ -16,7 +16,7 @@ s deploy -t s.yaml
 https://help.aliyun.com/document_detail/89032.html
 
 ## ToDO
-[*] 二维码
-[*] 代理
-[*] 图片压缩
-[*] 微信签名
+- [*] 二维码
+- [*] 代理
+- [*] 图片压缩
+- [*] 微信签名
