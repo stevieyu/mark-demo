@@ -21,16 +21,17 @@ class ProxyController extends BaseController
             $item->expiresAfter(60 * 60 * 24);
             $res = (new Client())->get($r);
             return [
-                'headers' => [
+                'headers' => array_filter([
                     'Content-Type' => implode('', $res->getHeader('Content-Type')),
-                ],
+                    'Cache-Control' => implode('', $res->getHeader('Cache-Control')),
+                    'last-modified' => implode('', $res->getHeader('last-modified')),
+                ]),
                 'body' => $res->getBody()->getContents()
             ];
         });
 
-        return new Response(200, [
-            ...$res['headers'],
+        return new Response(200, array_merge($res['headers'], [
             'Cross-Origin-Resource-Policy' => 'cross-origin'
-        ], $res['body']);
+        ]), $res['body']);
     }
 }

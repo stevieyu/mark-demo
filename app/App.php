@@ -50,6 +50,8 @@ class App extends BaseApp
             'cacheFile' => $cache_key, /* required */
         ]);
 
+//        shell_exec('rm -rf /tmp/storage/cache');
+
         \Workerman\Worker::runAll();
     }
 }
