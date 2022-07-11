@@ -17,8 +17,8 @@ services:
       function:
         name: ${vars.fName}
         handler: index.handler
-        timeout: 3
-        memorySize: 128
+        timeout: 10
+        memorySize: 256
         codeUri: ./
         runtime: custom
         instanceConcurrency: 100
