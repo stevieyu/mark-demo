@@ -12,7 +12,7 @@ class WechatController extends BaseController
     {
         $app = Factory::officialAccount([
             'app_id' => $request->get('appid', 'wxbeace8cd80da4952'),
-            'secret' => $request->get('appid', 'e9c779ef6b0ffecf4ac49c51959190d9'),
+            'secret' => $request->get('secret', 'e9c779ef6b0ffecf4ac49c51959190d9'),
         ]);
 
         $url = $request->get('url', $request->header('referer'));
