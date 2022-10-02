@@ -11,7 +11,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache Composer packages
-        id: composer-cache
         uses: actions/cache@v3
         with:
           path: vendor
@@ -20,13 +19,13 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies
-      - uses: php-actions/composer@v6
+        uses: php-actions/composer@v6
         with:
           php_version: "8.1"
-        run: composer install --prefer-dist --no-progress
+        run: composer install --no-dev --prefer-dist --no-progress
 
       - name: serverless deploy
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
