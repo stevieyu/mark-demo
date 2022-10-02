@@ -24,12 +24,12 @@ jobs:
           php_version: "8.1"
         run: composer install --no-dev --prefer-dist --no-progress
 
-      - name: serverless deploy
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm install
-      - run: npm install -g @serverless-devs/s
-      - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
-      - run: s deploy -y --use-local
+#      - name: serverless deploy
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 16
+#          registry-url: https://registry.npmjs.org/
+#      - run: npm install
+#      - run: npm install -g @serverless-devs/s
+#      - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
+#      - run: s deploy -y --use-local
