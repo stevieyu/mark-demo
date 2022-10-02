@@ -8,7 +8,8 @@ App::$logFile = '/tmp/mark-run.log';
 
 $api = new App('http://0.0.0.0:9000');
 
-$api->count = 2; // process count
+$cores = (int)(PHP_OS_FAMILY == 'Windows' ? shell_exec('echo %NUMBER_OF_PROCESSORS%') : shell_exec('nproc'));
+$api->count = $cores; // process count
 
 $files = new RecursiveDirectoryIterator('app/Controllers');
 
