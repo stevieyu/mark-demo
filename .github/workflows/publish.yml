@@ -30,7 +30,6 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm install
       - run: npm install -g @serverless-devs/s
       - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
       - run: s deploy -y --use-local
