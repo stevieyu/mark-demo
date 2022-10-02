@@ -18,11 +18,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install dependencies
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-        run: composer install --no-dev --prefer-dist --no-progress
+#      - name: Install dependencies
+#        uses: php-actions/composer@v6
+#        with:
+#          php_version: "8.1"
+#        run: composer install --no-dev --prefer-dist --no-progress
 
 #      - name: serverless deploy
 #        uses: actions/setup-node@v3
