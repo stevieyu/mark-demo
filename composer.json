@@ -8,18 +8,18 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4|^8",
         "ext-json": "*",
         "mark-php/mark": "^2.0",
         "endroid/qr-code": "^4.4",
         "symfony/cache": "^5.4",
-        "w7corp/easywechat": "^5.2|^6.6",
-        "intervention/image": "^2.7|3.0",
-        "guzzlehttp/guzzle": "^7.4",
+        "w7corp/easywechat": "^5.30",
+        "intervention/image": "^2.7",
+        "guzzlehttp/guzzle": "^7.5",
         "j0k3r/php-readability": "^2.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^5.4|^6.1"
+        "symfony/var-dumper": "^5.4"
     },
     "scripts": {
         "start": "php start.php start",

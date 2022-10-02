@@ -21,7 +21,7 @@ RUN apk add --no-cache php8-phar php8-mbstring && \
     composer config -g secure-http false
 COPY composer.json .
 COPY composer.lock .
-RUN composer install --no-dev
+RUN composer install --no-dev --prefer-dist
 
 
 
@@ -37,4 +37,4 @@ RUN echo "ini" && \
     echo "opcache.jit_buffer_size=64M" >> /etc/php8/conf.d/00_opcache.ini && \
     echo "end ini"
 
-CMD ["php", "start.php", "start"]
+CMD ["$APP_PATH/bootstrap"]
