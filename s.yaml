@@ -7,7 +7,7 @@ vars:
   fName: mark
 services:
   fc-customruntime-mark:
-    component: devsapp/fc
+    component: fc
     props:
       region: ${vars.region}
       service:
@@ -22,6 +22,11 @@ services:
         codeUri: ./
         runtime: custom
         instanceConcurrency: 100
+        environmentVariables:
+          PATH: '/opt/php8.1/bin:$PATH'
+          LD_LIBRARY_PATH: '$LD_LIBRARY_PATH:/opt/php8.1/lib'
+        layers:
+          - acs:fc:${vars.region}:official:layers/PHP81/versions/3
       triggers:
         - name: httpTrigger
           type: http

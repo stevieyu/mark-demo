@@ -6,7 +6,7 @@ class DefaultController extends BaseController
 {
     public function index(): string
     {
-        return 'Hello world';
+        return 'Hello world '.phpversion();
     }
 
     public function exts(): array
@@ -19,8 +19,10 @@ class DefaultController extends BaseController
         return $ret;
     }
 
-    public function test(): string
+    public function info(): string
     {
-        return '';
+        ob_start();
+        phpinfo();
+        return nl2br(ob_get_clean());
     }
 }
