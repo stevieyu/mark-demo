@@ -10,7 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Validate composer.json and composer.lock
+        with:
+          php_version: "8.1"
+        run: composer validate --strict
+
       - name: Cache Composer packages
+        id: composer-cache
         uses: actions/cache@v3
         with:
           path: vendor
@@ -18,11 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-#      - name: Install dependencies
-#        uses: php-actions/composer@v6
-#        with:
-#          php_version: "8.1"
-#        run: composer install --no-dev --prefer-dist --no-progress
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
 #      - name: serverless deploy
 #        uses: actions/setup-node@v3
