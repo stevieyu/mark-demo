@@ -10,11 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Validate composer.json and composer.lock
-        with:
-          php-version: 7.4
-      - run: composer validate --strict
-
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
@@ -25,7 +20,11 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        uses: php-actions/composer@v6
+        with:
+          php-version: 7.4
+      - run: composer validate --strict
+      - run: composer install --prefer-dist --no-progress
 
       - name: serverless deploy
         uses: actions/setup-node@v3
