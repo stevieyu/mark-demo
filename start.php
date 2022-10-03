@@ -3,6 +3,8 @@ require 'vendor/autoload.php';
 
 use App\App;
 
+ini_set('memory_limit',-1);
+
 App::$pidFile = '/tmp/mark-run.pid';
 App::$logFile = '/tmp/mark-run.log';
 
