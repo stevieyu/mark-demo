@@ -13,7 +13,7 @@ jobs:
       - name: Validate composer.json and composer.lock
         with:
           php-version: 7.4
-        run: composer validate --strict
+      - run: composer validate --strict
 
       - name: Cache Composer packages
         id: composer-cache
