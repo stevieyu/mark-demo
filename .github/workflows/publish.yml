@@ -27,7 +27,6 @@ jobs:
 
       - name: serverless deploy
         uses: actions/setup-node@v3
-        timeout-minutes: 10
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
