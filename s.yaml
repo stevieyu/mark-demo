@@ -18,15 +18,15 @@ services:
         name: ${vars.fName}
         handler: index.handler
         timeout: 10
-        memorySize: 256
+        memorySize: 128
         codeUri: ./
         runtime: custom
         instanceConcurrency: 100
-        environmentVariables:
-          PATH: '/opt/php8.1/bin:$PATH'
-          LD_LIBRARY_PATH: '$LD_LIBRARY_PATH:/opt/php8.1/lib'
-        layers:
-          - acs:fc:${vars.region}:official:layers/PHP81/versions/3
+#        environmentVariables:
+#          PATH: '/opt/php8.1/bin:/usr/local/bin/apache-maven/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin'
+#          LD_LIBRARY_PATH: '/opt/php8.1/lib:/code:/code/lib:/usr/local/lib'
+#        layers:
+#          - acs:fc:${vars.region}:official:layers/PHP81/versions/3
       triggers:
         - name: httpTrigger
           type: http
