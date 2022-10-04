@@ -1,7 +1,4 @@
-.s
-.idea
-.github
-*ignore
+.*
 *.md
 Dockerfile
 s.yaml
