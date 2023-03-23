@@ -22,11 +22,12 @@ services:
         codeUri: ./
         runtime: custom
         instanceConcurrency: 100
-#        environmentVariables:
-#          PATH: '/opt/php8.1/bin:/usr/local/bin/apache-maven/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin'
-#          LD_LIBRARY_PATH: '/opt/php8.1/lib:/code:/code/lib:/usr/local/lib'
-#        layers:
-#          - acs:fc:${vars.region}:official:layers/PHP81/versions/3
+        #https://github.com/awesome-fc/awesome-layers/blob/main/docs/PHP81/README.md
+        environmentVariables:
+          PATH: '/opt/php8.1/bin:/usr/local/bin/apache-maven/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin'
+          LD_LIBRARY_PATH: '/opt/php8.1/lib:/code:/code/lib:/usr/local/lib'
+        layers:
+          - acs:fc:${vars.region}:official:layers/PHP81/versions/5
       triggers:
         - name: httpTrigger
           type: http

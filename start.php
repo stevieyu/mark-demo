@@ -16,6 +16,7 @@ $api->count = 1; // process count
 $files = new RecursiveDirectoryIterator('app/Controllers');
 
 $responseHandle = function ($res) {
+    $headers = [];
     if (is_object($res)) {
         if (method_exists($res, 'toString')) $res = $res->toString();
         if (method_exists($res, 'toArray')) $res = $res->toArray();
@@ -23,9 +24,12 @@ $responseHandle = function ($res) {
     if (
         is_array($res)
         || $res instanceof \stdClass
-    ) $res = json_encode($res, JSON_UNESCAPED_UNICODE);
+    ) {
+        $headers['Content-Type'] = 'application/json; charset=utf-8';
+        $res = json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
 
-    return $res;
+    return new \Workerman\Protocols\Http\Response(200, $headers, $res);
 };
 $indexHandle = function ($route) use ($api, $responseHandle) {
     $api->get('', fn($requst) => $responseHandle($route->index($requst)));
