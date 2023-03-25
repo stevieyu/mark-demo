@@ -19,13 +19,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
 
-      - name: validate composer.json
+      - name: Install dependencies
         uses: php-actions/composer@v6
         with:
-          php-version: 7.4
+          php-version: 8.1
       - run: composer validate --strict
-
-      - name: Install dependencies
       - run: composer install --prefer-dist --no-progress --no-dev
 
       - name: serverless deploy
