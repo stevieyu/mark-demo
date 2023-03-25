@@ -27,7 +27,7 @@ jobs:
         with:
           php-version: 7.4
       - run: composer validate --strict
-      - run: composer install --prefer-dist --no-progress --no-dev
+      - run: composer install --prefer-dist --no-progress
 
       - name: serverless deploy
         uses: actions/setup-node@v3
