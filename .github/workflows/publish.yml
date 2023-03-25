@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: rm -rf vendor
+      - run: |
+          rm -rf vendor
+          ls -l
 
 #      - name: Cache Composer packages
 #        id: composer-cache
