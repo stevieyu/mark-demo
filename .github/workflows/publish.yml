@@ -29,6 +29,9 @@ jobs:
           dev: no
           args: --prefer-dist
 
+      - name: test
+        run: ls -l ${{ steps.composer-cache.outputs.dir }}
+
       - name: serverless deploy
         uses: actions/setup-node@v3
         with:
