@@ -10,23 +10,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Cache Composer packages
-        id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+#      - name: Cache Composer packages
+#        id: composer-cache
+#        run: |
+#          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+#
+#      - uses: actions/cache@v3
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-composer-
 
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
           php-version: 7.4
-      - run: rm -rf vendor
       - run: composer validate --strict
       - run: composer install --prefer-dist --no-progress --no-dev
 
