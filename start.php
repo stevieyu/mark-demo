@@ -29,6 +29,7 @@ $responseHandle = function ($res) {
         $res = json_encode($res, JSON_UNESCAPED_UNICODE);
     }
 
+    if($res instanceof \Workerman\Protocols\Http\Response) return $res;
     return new \Workerman\Protocols\Http\Response(200, $headers, $res);
 };
 $indexHandle = function ($route) use ($api, $responseHandle) {
