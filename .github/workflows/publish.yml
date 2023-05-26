@@ -16,8 +16,8 @@ jobs:
           path: |
             /tmp/composer-cache
             vendor
-            /home/runner/.npm
-            /home/runner/.s
+#            /home/runner/.npm
+#            /home/runner/.s
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
@@ -38,7 +38,7 @@ jobs:
       - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
       - run: s deploy -y --use-local
 
-      - name: test cmd
-        run: |
-          ls -al /tmp/composer-cache
-          ls -al /home/runner
+      # - name: test cmd
+      #   run: |
+      #     ls -al /tmp/composer-cache
+      #     ls -al /home/runner
