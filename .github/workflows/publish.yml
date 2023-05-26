@@ -22,7 +22,9 @@ jobs:
             /home/runner/.s
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-
+            ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            ${{ runner.os }}-composer
+            ${{ runner.os }}
 
       - name: Install dependencies
         uses: php-actions/composer@v6
