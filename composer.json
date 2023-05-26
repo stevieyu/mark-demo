@@ -24,7 +24,7 @@
     },
     "scripts": {
         "start": "php start.php start",
-        "deploy": "s deploy -t s.yaml"
+        "deploy": "s deploy -y --use-local"
     },
     "autoload": {
         "files": [
