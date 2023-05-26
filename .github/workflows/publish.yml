@@ -38,7 +38,7 @@ jobs:
       - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
       - run: s deploy -y --use-local
 
-#      - name: test
-#        run: |
-#          npm config get cache
-#          ls -l ~/.s
+      - name: test cmd
+        run: |
+          ls -l /tmp/composer-cache
+          ls -l /home/runner
