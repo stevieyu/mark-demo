@@ -82,33 +82,4 @@ foreach ($files as $file) {
     }
 }
 
-function send_request_on_shutdown($event = 'shutdown') {
-    ignore_user_abort(true); set_time_limit(60);
-
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-        CURLOPT_URL => "https://api.zinc.dev/api/dugujianxiao_organization_891/default/_json",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_FAILONERROR => false,
-        CURLOPT_ENCODING => "gzip",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 60,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => '[{"app": "mark", "event": "'.$event.'"}]',
-        CURLOPT_HTTPHEADER => [
-            "Authorization: Basic ZHVndWppYW54aWFvQDEyNi5jb206NUIzYTRINzkyNjhNVTFHMERTdGM=",
-            "content-type: application/json"
-        ],
-    ]);
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-
-    error_log($err ? 'report err: '.$err : 'report '.$event.': '. $response);
-}
-send_request_on_shutdown('up');
-register_shutdown_function('send_request_on_shutdown');
-
 $api->start();

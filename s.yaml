@@ -17,7 +17,7 @@ services:
       function:
         name: ${vars.fName}
         handler: index.handler
-        timeout: 3
+        timeout: 60
         memorySize: 128
         codeUri: ./
         # runtime: custom.debian10
@@ -42,10 +42,10 @@ services:
               - PUT
               - GET
               - DELETE
-      customDomains:
-        - domainName: ${vars.fName}.fc-hn.stevie.top
-          protocol: HTTP
-          routeConfigs:
-            - serviceName: ${vars.sName}
-              functionName: ${vars.fName}
-              path: /*
+      # customDomains:
+      #   - domainName: ${vars.fName}.fc-hn.stevie.top
+      #     protocol: HTTP
+      #     routeConfigs:
+      #       - serviceName: ${vars.sName}
+      #         functionName: ${vars.fName}
+      #         path: /*

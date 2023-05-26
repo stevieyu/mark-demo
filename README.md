@@ -1,10 +1,10 @@
 ## local start
 ```sh
-s local start -t s.yaml Auto
+s local start Auto
 
 # or
-
-docker run --rm -v $(pwd):/code -it --entrypoint="" -p 9000:9000 aliyunfc/runtime-custom bash
+docker tag registry.cn-beijing.aliyuncs.com/aliyunfc/runtime-custom:1.10.9 runtime-custom
+docker run --rm -v $(pwd):/code -it --entrypoint="" -p 9000:9000 runtime-custom bash
 ```
 
 ## deploy
