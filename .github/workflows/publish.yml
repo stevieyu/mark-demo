@@ -40,5 +40,5 @@ jobs:
 
       - name: test cmd
         run: |
-          ls -l /tmp/composer-cache
-          ls -l /home/runner
+          ls -al /tmp/composer-cache
+          ls -al /home/runner
