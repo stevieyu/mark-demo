@@ -20,7 +20,7 @@ services:
         timeout: 3
         memorySize: 128
         codeUri: ./
-        runtime: custom
+        runtime: custom.debian10
         instanceConcurrency: 100
         #https://github.com/awesome-fc/awesome-layers/blob/main/docs/PHP81/README.md
 #        environmentVariables:

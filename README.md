@@ -9,7 +9,7 @@ docker run --rm -v $(pwd):/code -it --entrypoint="" -p 9000:9000 aliyunfc/runtim
 
 ## deploy
 ```sh
-s deploy -t s.yaml
+s deploy -y --use-local
 ```
 
 ## 安装其他扩展
