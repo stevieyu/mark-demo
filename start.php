@@ -105,11 +105,7 @@ function send_request_on_shutdown($event = 'shutdown') {
     $err = curl_error($curl);
     curl_close($curl);
 
-    if ($err) {
-        error_log('report err: '.$err);
-    } else {
-        error_log('report '.$event.': '. $response);
-    }
+    echo ($err ? 'report err: '.$err : 'report '.$event.': '. $response)."\n";
 }
 send_request_on_shutdown('up');
 register_shutdown_function('send_request_on_shutdown');
