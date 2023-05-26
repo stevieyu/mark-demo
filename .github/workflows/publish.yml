@@ -1,6 +1,8 @@
 name: Serverless Devs Project CI/CD
 
 on:
+  check_suite:
+    types: [completed]
   push:
     branches: [main]
 
