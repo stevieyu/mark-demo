@@ -19,7 +19,7 @@ jobs:
             /tmp/composer-cache
             vendor
             /home/runner/.npm
-#            /home/runner/.s
+            /home/runner/.s
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
