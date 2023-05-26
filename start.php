@@ -91,6 +91,7 @@ function send_request_on_shutdown($event = 'shutdown') {
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_FAILONERROR => false,
         CURLOPT_ENCODING => "gzip",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 60,
@@ -105,7 +106,7 @@ function send_request_on_shutdown($event = 'shutdown') {
     $err = curl_error($curl);
     curl_close($curl);
 
-    echo ($err ? 'report err: '.$err : 'report '.$event.': '. $response)."\n";
+    error_log($err ? 'report err: '.$err : 'report '.$event.': '. $response);
 }
 send_request_on_shutdown('up');
 register_shutdown_function('send_request_on_shutdown');
