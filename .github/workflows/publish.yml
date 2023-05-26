@@ -22,7 +22,6 @@ jobs:
             /home/runner/.s
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
             ${{ runner.os }}-composer
             ${{ runner.os }}
 
