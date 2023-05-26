@@ -3,8 +3,8 @@ name: Serverless Devs Project CI/CD
 on:
   check_suite:
     types: [completed]
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
 
 jobs:
   serverless-devs-cd:
@@ -18,7 +18,7 @@ jobs:
           path: |
             /tmp/composer-cache
             vendor
-#            /home/runner/.npm
+            /home/runner/.npm
 #            /home/runner/.s
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
