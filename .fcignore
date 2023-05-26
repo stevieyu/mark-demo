@@ -1,5 +1,7 @@
 .*
 *.md
 docker*
+Docker*
+DOCKER*
 s.yaml
 *.log
