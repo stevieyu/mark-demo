@@ -1,11 +1,11 @@
-FROM alpine AS base
+FROM alpine:edge AS base
 
 ENV APP_PATH=/app
 
 WORKDIR $APP_PATH
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk add --no-cache php8 php8-iconv php8-ctype php8-simplexml php8-curl php8-fileinfo php8-openssl php8-opcache \
+#RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN apk add --no-cache php8 php8-iconv php8-ctype php8-simplexml php8-curl php8-fileinfo php8-openssl php8-opcache \
     php8-posix php8-pcntl \
     php8-pecl-imagick && \
     ln -s /usr/bin/php8 /usr/bin/php
