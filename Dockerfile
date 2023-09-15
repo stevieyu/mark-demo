@@ -1,4 +1,4 @@
-FROM alpine:edge AS base
+FROM alpine AS base
 
 ENV APP_PATH=/app
 
